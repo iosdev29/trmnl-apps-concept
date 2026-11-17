@@ -140,5 +140,5 @@ html.light { --note-bg: #eef2ff; --note-line: #c7d2fe; --note-fg: #4250d6; --not
 .note-more:hover { background: var(--note-btn-hi); text-decoration: none; }
 .note-more svg { width: 16px; height: 16px; fill: currentColor; }
 @media (max-width: 640px) { .note { flex-wrap: wrap; } .note-more { margin-left: 40px; } }
-.back { margin-left: auto; font-size: 14px; color: var(--muted); }
-.back:hover { color: var(--fg); }
+.back { display: inline-flex; align-items: center; height: 32px; padding: 0 14px; border: 1px solid var(--line); border-radius: 8px; font-size: 14px; color: var(--fg); }
+.back:hover { background: color-mix(in srgb, var(--fg) 8%, transparent); }

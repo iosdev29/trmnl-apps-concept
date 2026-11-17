@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>glance() | TRMNL UI</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<header class="top"><a href="index.html" class="brand">TRMNL <span>Developer</span></a><span class="crumbs"><a href="index.html">TRMNL UI</a> / glance()</span></header>
+<div class="wrap"><nav class="side"><div class="fw-switch" role="tablist"><a class="on" href="index.html">TRMNL UI</a><a class="" href="api.html">App API v1</a></div><input id="filter" type="search" placeholder="Filter" aria-label="Filter"><div class="nav-group">Essentials</div><a class="nav-item" href="first-app.html" data-title="building your first app"><span class="badge k-article">A</span><span>Building your first app</span></a><a class="nav-item" href="App.html" data-title="app"><span class="badge k-class">C</span><span>App</span></a><a class="nav-item" href="body.html" data-title="body()"><span class="badge k-method">M</span><span>body()</span></a><a class="nav-item" href="register.html" data-title="register(_:)"><span class="badge k-func">f</span><span>register(_:)</span></a><a class="nav-item" href="preview.html" data-title="preview()"><span class="badge k-method">M</span><span>preview()</span></a><a class="nav-item" href="settings.html" data-title="settings"><span class="badge k-article">A</span><span>Settings</span></a><div class="nav-group">State</div><a class="nav-item" href="State.html" data-title="state"><span class="badge k-class">C</span><span>State</span></a><a class="nav-item" href="state-func.html" data-title="state(_:_:)"><span class="badge k-func">f</span><span>state(_:_:)</span></a><div class="nav-group">Layout</div><a class="nav-item" href="Layout.html" data-title="layout(_:)"><span class="badge k-func">f</span><span>Layout(_:)</span></a><a class="nav-item" href="Row.html" data-title="row(_:)"><span class="badge k-func">f</span><span>Row(_:)</span></a><a class="nav-item" href="Spacer.html" data-title="spacer()"><span class="badge k-func">f</span><span>Spacer()</span></a><a class="nav-item" href="Divider.html" data-title="divider()"><span class="badge k-func">f</span><span>Divider()</span></a><div class="nav-group">Text</div><a class="nav-item" href="Title.html" data-title="title(_:)"><span class="badge k-func">f</span><span>Title(_:)</span></a><a class="nav-item" href="Description.html" data-title="description(_:)"><span class="badge k-func">f</span><span>Description(_:)</span></a><div class="nav-group">Data</div><a class="nav-item" href="Value.html" data-title="value(_:_:)"><span class="badge k-func">f</span><span>Value(_:_:)</span></a><a class="nav-item" href="ProgressBar.html" data-title="progressbar(_:_:)"><span class="badge k-func">f</span><span>ProgressBar(_:_:)</span></a><a class="nav-item" href="Heatmap.html" data-title="heatmap(_:_:_:_:)"><span class="badge k-func">f</span><span>Heatmap(_:_:_:_:)</span></a><div class="nav-group">Lists and reading</div><a class="nav-item" href="List.html" data-title="list(_:_:)"><span class="badge k-func">f</span><span>List(_:_:)</span></a><a class="nav-item" href="Reader.html" data-title="reader(_:_:)"><span class="badge k-func">f</span><span>Reader(_:_:)</span></a><div class="nav-group">Bars</div><a class="nav-item" href="TitleBar.html" data-title="titlebar(_:_:)"><span class="badge k-func">f</span><span>TitleBar(_:_:)</span></a><div class="nav-group">All components</div><a class="nav-item" href="components.html" data-title="all components"><span class="badge k-article">A</span><span>All components</span></a><a class="nav-item" href="rendering.html" data-title="how the firmware renders"><span class="badge k-article">A</span><span>How the firmware renders</span></a><div class="nav-group">Input and screen updates</div><a class="nav-item" href="focus.html" data-title="handling input with focus"><span class="badge k-article">A</span><span>Handling input with focus</span></a><a class="nav-item" href="refresh.html" data-title="screen updates and refresh"><span class="badge k-article">A</span><span>Screen updates and refresh</span></a><div class="nav-group">Playlist</div><a class="nav-item on" href="glance.html" data-title="glance()"><span class="badge k-method">M</span><span>glance()</span></a><a class="nav-item" href="glances.html" data-title="glances in the playlist"><span class="badge k-article">A</span><span>Glances in the playlist</span></a><div class="nav-group">Devices</div><a class="nav-item" href="devices.html" data-title="devices and sizes"><span class="badge k-article">A</span><span>Devices and sizes</span></a></nav>
+<main>
+<div class="hero"><div class="eyebrow">Instance Method</div><h1>glance()</h1><p class="abstract">The screen the playlist shows for your app.</p>
+<div class="hero-row"><div class="avail">TRMNL UI 1.0 · App API v1 · TRMNL X · TRMNL OG</div>
+<div class="device-pill" role="group" aria-label="Device for the examples"><button data-dev="x">TRMNL X</button><button data-dev="og">TRMNL OG</button></div></div></div>
+<div class="content"><h2>Declaration</h2><pre class="code decl"><span class="f">glance</span>(): <span class="t">View</span> | <span class="k">null</span></pre><h2>Return Value</h2><p>A view, or <code>null</code> to show the current <a href="body.html"><code>body()</code></a>.</p><h2 id="discussion">Discussion</h2><p>An installed app is a playlist item, like a plugin. When the playlist reaches it, the firmware calls the app with <code>onLaunch(GLANCE)</code> and shows this view. No press reaches the app in this mode: Select opens it, and Hold middle in the app returns to this same playlist item.</p><div class="example"><div class="ex-head">water.ts</div><pre class="code"><span class="c">// Name: Water</span>
+<span class="k">import</span> { App, <span class="t">View</span>, Layout, Title, Description, Value, ProgressBar, List, TitleBar, state, register } <span class="k">from</span> <span class="s">&quot;./trmnl-ui&quot;</span>;
+<span class="k">export</span> { trmnl_event } <span class="k">from</span> <span class="s">&quot;./trmnl-ui&quot;</span>;
+
+<span class="k">const</span> GOAL = <span class="n">8</span>;
+<span class="k">const</span> glasses = <span class="f">state</span>(<span class="s">&quot;glasses&quot;</span>);
+<span class="k">const</span> choice = <span class="f">state</span>(<span class="s">&quot;choice&quot;</span>);
+
+<span class="k">function</span> <span class="f">act</span>(row: <span class="t">i32</span>): <span class="t">void</span> {
+  <span class="k">if</span> (row == <span class="n">0</span> &amp;&amp; glasses.value &lt; GOAL) glasses.value = glasses.value + <span class="n">1</span>;
+  <span class="k">if</span> (row == <span class="n">1</span>) glasses.value = <span class="n">0</span>;
+}
+
+<span class="k">class</span> Water <span class="k">extends</span> App {
+  <span class="f">body</span>(): <span class="t">View</span> {
+    <span class="k">return</span> <span class="f">Layout</span>([
+      <span class="f">Value</span>(glasses.value.<span class="f">toString</span>() + <span class="s">&quot; / &quot;</span> + GOAL.<span class="f">toString</span>(), <span class="s">&quot;glasses today&quot;</span>),
+      <span class="f">ProgressBar</span>(glasses.value, GOAL),
+      <span class="f">List</span>([<span class="s">&quot;Drank a glass&quot;</span>, <span class="s">&quot;Start a new day&quot;</span>], choice).<span class="f">onSelect</span>(act),
+      <span class="f">TitleBar</span>(<span class="s">&quot;Water&quot;</span>),
+    ]);
+  }
+  <span class="c">// What the playlist shows between plugins.</span>
+  <span class="f">glance</span>(): <span class="t">View</span> {
+    <span class="k">return</span> <span class="f">Layout</span>([
+      <span class="f">Title</span>(<span class="s">&quot;Water&quot;</span>),
+      <span class="f">Description</span>(glasses.value.<span class="f">toString</span>() + <span class="s">&quot; of &quot;</span> + GOAL.<span class="f">toString</span>() + <span class="s">&quot; glasses today.&quot;</span>),
+      <span class="f">ProgressBar</span>(glasses.value, GOAL),
+      <span class="f">TitleBar</span>(<span class="s">&quot;Water&quot;</span>, <span class="s">&quot;Select to log a glass&quot;</span>),
+    ]);
+  }
+}
+
+<span class="f">register</span>(<span class="k">new</span> <span class="f">Water</span>());</pre></div><div class="shots"><figure data-device="x"><img src="images/water-glance-x.png" alt="water-glance on TRMNL X · 1872 × 1404" loading="lazy"><figcaption>TRMNL X · 1872 × 1404</figcaption></figure><figure data-device="og"><img src="images/water-glance-og.png" alt="water-glance on TRMNL OG · 800 × 480" loading="lazy"><figcaption>TRMNL OG · 800 × 480</figcaption></figure></div><p class="caption">The Water glance in the playlist.</p><h2>See Also</h2><div class="topic-list"><div class="topic"><span class="badge k-article">A</span><div><a href="glances.html">Glances in the playlist</a><p>How an app sits among plugins, opens on Select and returns on Hold.</p></div></div><div class="topic"><span class="badge k-class">C</span><div><a href="App.html"><code>App</code></a><p>The base class of a TRMNL UI app.</p></div></div><div class="topic"><span class="badge k-func">f</span><div><a href="ProgressBar.html"><code>ProgressBar(_:_:)</code></a><p>How far along something is.</p></div></div></div></div>
+</main></div>
+<script src="docs.js"></script>
+</body></html>

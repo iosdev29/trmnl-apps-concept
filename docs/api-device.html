@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Device | TRMNL UI</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<header class="top"><a href="index.html" class="brand">TRMNL <span>Developer</span></a><span class="crumbs"><a href="api.html">App API v1</a> / Device</span></header>
+<div class="wrap"><nav class="side"><div class="fw-switch" role="tablist"><a class="" href="index.html">TRMNL UI</a><a class="on" href="api.html">App API v1</a></div><input id="filter" type="search" placeholder="Filter" aria-label="Filter"><div class="nav-group">Lifecycle</div><a class="nav-item" href="api-launch.html" data-title="launchreason"><span class="badge k-enum">E</span><span>LaunchReason</span></a><a class="nav-item" href="api-suspend.html" data-title="suspendreason"><span class="badge k-enum">E</span><span>SuspendReason</span></a><a class="nav-item" href="api-register.html" data-title="register(_:)"><span class="badge k-func">f</span><span>register(_:)</span></a><div class="nav-group">Device data</div><a class="nav-item on" href="api-device.html" data-title="device"><span class="badge k-ns">N</span><span>Device</span></a><div class="nav-group">Input</div><a class="nav-item" href="api-input.html" data-title="inputevent"><span class="badge k-class">C</span><span>InputEvent</span></a><div class="nav-group">Storage</div><a class="nav-item" href="api-kv.html" data-title="kv"><span class="badge k-ns">N</span><span>KV</span></a><a class="nav-item" href="api-files.html" data-title="files"><span class="badge k-ns">N</span><span>Files</span></a><div class="nav-group">Screen</div><a class="nav-item" href="api-ui.html" data-title="render(_:_:)"><span class="badge k-func">f</span><span>render(_:_:)</span></a><div class="nav-group">Feedback and session</div><a class="nav-item" href="api-log.html" data-title="log"><span class="badge k-ns">N</span><span>Log</span></a><a class="nav-item" href="api-session.html" data-title="session"><span class="badge k-ns">N</span><span>Session</span></a><a class="nav-item" href="api-buzzer.html" data-title="buzzer"><span class="badge k-ns">N</span><span>Buzzer</span></a><div class="nav-group">Languages</div><a class="nav-item" href="api-languages.html" data-title="writing apps in other languages"><span class="badge k-article">A</span><span>Writing apps in other languages</span></a><div class="nav-group">Interface and limits</div><a class="nav-item" href="api-abi.html" data-title="the raw interface"><span class="badge k-article">A</span><span>The raw interface</span></a><a class="nav-item" href="api-limits.html" data-title="limits and permissions"><span class="badge k-article">A</span><span>Limits and permissions</span></a><a class="nav-item" href="api-planned.html" data-title="planned modules"><span class="badge k-article">A</span><span>Planned modules</span></a></nav>
+<main>
+<div class="hero"><div class="eyebrow">Namespace</div><h1>Device</h1><p class="abstract">What the device tells an app about itself. Read-only.</p>
+<div class="hero-row"><div class="avail">App API v1 · TRMNL X · TRMNL OG</div>
+<div class="device-pill" role="group" aria-label="Device for the examples"><button data-dev="x">TRMNL X</button><button data-dev="og">TRMNL OG</button></div></div></div>
+<div class="content"><h2>Declaration</h2><pre class="code decl">namespace Device {
+  <span class="k">function</span> <span class="f">model</span>(): <span class="t">i32</span>           <span class="c">// Model.X or Model.OG</span>
+  <span class="k">function</span> <span class="f">width</span>(): <span class="t">i32</span>
+  <span class="k">function</span> <span class="f">height</span>(): <span class="t">i32</span>
+  <span class="k">function</span> <span class="f">depth</span>(): <span class="t">i32</span>           <span class="c">// bits per pixel</span>
+  <span class="k">function</span> <span class="f">hasTouchbar</span>(): <span class="t">bool</span>
+  <span class="k">function</span> <span class="f">hasButton</span>(): <span class="t">bool</span>
+  <span class="k">function</span> <span class="f">battery</span>(): <span class="t">i32</span>         <span class="c">// percent</span>
+  <span class="k">function</span> <span class="f">now</span>(): f64             <span class="c">// Unix seconds</span>
+  <span class="k">function</span> <span class="f">appVersion</span>(): <span class="t">string</span>   <span class="c">// this app&#x27;s installed version</span>
+}</pre><table><thead><tr><th>Function</th><th>TRMNL X</th><th>TRMNL OG</th></tr></thead><tbody><tr><td><code>model()</code></td><td><code>Model.X</code> (0)</td><td><code>Model.OG</code> (1)</td></tr><tr><td><code>width()</code> × <code>height()</code></td><td>1872 × 1404</td><td>800 × 480</td></tr><tr><td><code>depth()</code></td><td>4 (16 grays)</td><td>1 (black and white)</td></tr><tr><td><code>hasTouchbar()</code></td><td>true</td><td>false</td></tr><tr><td><code>hasButton()</code></td><td>false</td><td>true</td></tr><tr><td><code>battery()</code></td><td>percent, from the fuel gauge</td><td>percent, from the voltage</td></tr><tr><td><code>now()</code></td><td>from the last check-in</td><td>from the last check-in</td></tr><tr><td><code>appVersion()</code></td><td>the version from the app's manifest, as installed on this device</td><td>the same</td></tr></tbody></table><p>Use it to choose content, not layout: TRMNL UI already sizes components for each device.</p><div class="example"><div class="ex-head">api-device.ts</div><pre class="code"><span class="c">// Name: About this device</span>
+<span class="k">import</span> { App, <span class="t">View</span>, Layout, Title, Row, Value, Divider, Description, TitleBar, Device, Model, register } <span class="k">from</span> <span class="s">&quot;./trmnl-ui&quot;</span>;
+<span class="k">export</span> { trmnl_event } <span class="k">from</span> <span class="s">&quot;./trmnl-ui&quot;</span>;
+
+<span class="k">class</span> About <span class="k">extends</span> App {
+  <span class="f">body</span>(): <span class="t">View</span> {
+    <span class="k">const</span> name = Device.<span class="f">model</span>() == Model.X ? <span class="s">&quot;TRMNL X&quot;</span> : <span class="s">&quot;TRMNL OG&quot;</span>;
+    <span class="k">const</span> input = Device.<span class="f">hasTouchbar</span>() ? <span class="s">&quot;touchbar&quot;</span> : <span class="s">&quot;one button&quot;</span>;
+    <span class="k">return</span> <span class="f">Layout</span>([
+      <span class="f">Title</span>(name),
+      <span class="f">Row</span>([
+        <span class="f">Value</span>(Device.<span class="f">width</span>().<span class="f">toString</span>() + <span class="s">&quot;×&quot;</span> + Device.<span class="f">height</span>().<span class="f">toString</span>(), <span class="s">&quot;pixels&quot;</span>),
+        <span class="f">Value</span>(Device.<span class="f">depth</span>() == <span class="n">4</span> ? <span class="s">&quot;16&quot;</span> : <span class="s">&quot;2&quot;</span>, <span class="s">&quot;gray levels&quot;</span>),
+        <span class="f">Value</span>(Device.<span class="f">battery</span>().<span class="f">toString</span>() + <span class="s">&quot;%&quot;</span>, <span class="s">&quot;battery&quot;</span>),
+      ]),
+      <span class="f">Divider</span>(),
+      <span class="f">Description</span>(<span class="s">&quot;Input: &quot;</span> + input + <span class="s">&quot;. Read with Device, shown with TRMNL UI.&quot;</span>),
+      <span class="f">TitleBar</span>(<span class="s">&quot;About this device&quot;</span>),
+    ]);
+  }
+}
+
+<span class="f">register</span>(<span class="k">new</span> <span class="f">About</span>());</pre></div><div class="shots"><figure data-device="x"><img src="images/api-device-x.png" alt="api-device on TRMNL X · 1872 × 1404" loading="lazy"><figcaption>TRMNL X · 1872 × 1404</figcaption></figure><figure data-device="og"><img src="images/api-device-og.png" alt="api-device on TRMNL OG · 800 × 480" loading="lazy"><figcaption>TRMNL OG · 800 × 480</figcaption></figure></div><h2>See Also</h2><div class="topic-list"><div class="topic"><span class="badge k-article">A</span><div><a href="devices.html">Devices and sizes</a><p>How one app looks right on a 1872 × 1404 grayscale X and an 800 × 480 black-and-white OG.</p></div></div><div class="topic"><span class="badge k-func">f</span><div><a href="Row.html"><code>Row(_:)</code></a><p>Places views side by side in equal widths.</p></div></div></div></div>
+</main></div>
+<script src="docs.js"></script>
+</body></html>
